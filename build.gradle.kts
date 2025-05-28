@@ -30,3 +30,30 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+sourceSets {
+    create("integrationTest") {
+        java {
+            compileClasspath += sourceSets.main.get().output + configurations.testRuntimeClasspath.get()
+            runtimeClasspath += output + compileClasspath
+        }
+    }
+}
+
+val integrationTestImplementation: Configuration by configurations.getting {
+    extendsFrom(configurations.implementation.get())
+}
+
+configurations["integrationTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
+
+val integrationTest = tasks.register<Test>("integrationTest", fun Test.() {
+    description = "Runs the integration tests"
+    group = "verification"
+    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+    classpath = sourceSets["integrationTest"].runtimeClasspath
+    mustRunAfter(tasks["test"])
+})
+
+tasks.check {
+    dependsOn(integrationTest)
+}
