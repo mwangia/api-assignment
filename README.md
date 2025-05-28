@@ -1,8 +1,8 @@
 # Prerequisites
 
-- Docker
-- MiniKube
-- Java 17
+- Docker v20.10.14 or later
+- MiniKube v1.36.0
+- Java 17 or later
 - Mac Terminal
  
 
@@ -24,7 +24,7 @@ I implemented both unit tests and integration tests. To run the tests, navigate 
 - `./gradlew test` to run only unit tests.
 - `./gradlew integrationTest` To run only integration tests.
 
-I would automate this for CI/CD by ensuring all the tests run whenever a pull request is created and whenever a pull request is merged into a branch. 
+I would automate this for CI/CD by ensuring all the tests run whenever code is pushed to a feature branch, whenever a pull request is created and whenever a pull request is merged into a branch. 
 
 # Step 4: Containerization
 To run the application without using Kubernetes, navigate to the root folder(where the Dockerfile is) and run
